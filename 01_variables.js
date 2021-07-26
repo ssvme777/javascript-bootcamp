@@ -6,37 +6,37 @@
 
 //## VAR
 
-var a = 0,
-  b = 0;
+var p = 0,
+  q = 0;
 
 var z = y,
   y = 'A';
 
 console.log(z + y); // undefinedA
 
-var l = 0; // x is declared global, then assigned a value of 0
+var x = 0; // x is declared global, then assigned a value of 0
 
 console.log(typeof z); // undefined, since z doesn't exist yet
 
-function foo() {
+function a() {
   // when a is called,
   var y = 2; // y is declared local to function a, then assigned a value of 2
 
-  console.log(l, y); // 0 2
+  console.log(x, y); // 0 2
 
   function b() {
     // when b is called
-    l = 3; // assigns 3 to existing global x, doesn't create a new global var
+    x = 3; // assigns 3 to existing global x, doesn't create a new global var
     y = 4; // assigns 4 to existing outer y, doesn't create a new global var
     z = 5; // creates a new global variable z and assigns a value of 5.
   } // (Throws a ReferenceError in strict mode.)
 
   b(); // calling b creates z as a global variable
-  console.log(l, y, z); // 3 4 5
+  console.log(x, y, z); // 3 4 5
 }
 
-foo(); // calling a also calls b
-console.log(l, z); // 3 5
+a(); // calling a also calls b
+console.log(x, z); // 3 5
 console.log(typeof y); // undefined as y is local to function a
 
 //# #HOISTING
@@ -67,24 +67,22 @@ var num;
 //JavaScript only hoists declarations, not initializations.
 //If you are using a variable that is declared and initialized after using it, the value will be undefined.
 //The below two examples demonstrate the same behavior.
-var x = 1; // Initialize x
-console.log(x + ' ' + y); // '1 undefined'
-var y = 2;
+var l = 1; // Initialize l
+console.log(l + ' ' + m); // '1 undefined'
+var m = 2;
 
 // The following code will behave the same as the previous code:
-var x = 1; // Initialize x
-var y; // Declare y
-console.log(x + ' ' + y); // '1 undefined'
-y = 2; // Initialize y
-
-// http://ignaciothayer.com/post/a-dangerous-example-of-javascript-hoisting/
+var l = 1; // Initialize x
+var n; // Declare y
+console.log(l + ' ' + n); // '1 undefined'
+n = 2; // Initialize y
 
 //## LET
 // The let statement declares a block scope local variable, optionally initializing it to a value.
-
-var x = 'global';
+// Switch to the browser to see how this behaves there
+var k = 'global';
 let i = 'global';
-console.log(this.x); // "global"
+console.log(this.k); // "global"
 console.log(this.i); // undefined
 
 /* In ECMAScript 2015, let bindings are not subject to Variable Hoisting, which means that let declarations do not move 
@@ -103,6 +101,8 @@ function varTest() {
   console.log(x); // 2
 }
 
+//varTest()
+
 function letTest() {
   let x = 1;
   if (true) {
@@ -112,6 +112,8 @@ function letTest() {
   console.log(x); // 1
 }
 
+//letTest()
+
 //## HOISTING reprise
 
 function do_something() {
@@ -120,6 +122,8 @@ function do_something() {
   var bar = 1;
   let foo = 2;
 }
+
+//do_something()
 
 let j = 1;
 
@@ -146,19 +150,19 @@ switch (j) {
   }
 }
 
-var a = 1;
-var b = 2;
+var r = 1;
+var s = 2;
 
-if (a === 1) {
-  var a = 11; // the scope is global
-  let b = 22; // the scope is inside the if-block
+if (r === 1) {
+  var r = 11; // the scope is global
+  let s = 22; // the scope is inside the if-block
 
-  console.log(a); // 11
-  console.log(b); // 22
+  console.log(r); // 11
+  console.log(s); // 22
 }
 
-console.log(a); // 11
-console.log(b); // 2
+console.log(r); // 11
+console.log(s); // 2
 
 //## CONST
 // The const declaration creates a read-only reference to a value.
