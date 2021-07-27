@@ -34,7 +34,7 @@ test('computed property names', () => {
     real_lastname: 'White',
     fake_name: 'Pink',
     fake_lastname: 'Venn',
-    age: '35'
+    age: 35
   };
 
   expect(/* 🤔 */).toBe('Kelly');
@@ -49,10 +49,9 @@ test('define object properties', () => {
   const vip = {
     name: 'Kelly',
     lastname: 'White',
-    age: '35'
+    age: 35
   };
 
-  vip.age = 37;
   expect(/* 🤔 */).toBe('Kelly');
   expect(/* 🤔 */).toBe('White');
   expect(/* 🤔 */).toBe(35);
