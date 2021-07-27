@@ -1,5 +1,5 @@
 test('property access', () => {
-  //RULE: USE key access
+  //RULE: USE property access
   const obj = {
     name: 'Julian',
     lastname: 'Brown',
@@ -12,7 +12,7 @@ test('property access', () => {
 });
 
 test('key access', () => {
-  //RULE: USE property access
+  //RULE: USE key access
   const obj = {
     name: 'Julian',
     lastname: 'Brown',
