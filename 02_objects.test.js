@@ -3,7 +3,7 @@ test('property access', () => {
   const obj = {
     name: 'Julian',
     lastname: 'Brown',
-    age: '35'
+    age: 35
   };
 
   expect(/* 🤔 */).toBe('Julian');
@@ -16,7 +16,7 @@ test('key access', () => {
   const obj = {
     name: 'Julian',
     lastname: 'Brown',
-    age: '35'
+    age: 35
   };
 
   expect(/* 🤔 */).toBe('Julian');
