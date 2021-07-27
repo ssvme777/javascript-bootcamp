@@ -5,7 +5,7 @@ let aFunction = function() {
 };
 
 /*
-One of the benefit of creating a named function expression is that in case we encounted an error, 
+One of the benefit of creating a named function expression is that in case we encountered an error, 
 the stack trace will contain the name of the function, making it easier to find the origin of the error.
 */
 
@@ -17,7 +17,7 @@ function namedFunction() {
   /* logic */
 })();
 
-/* a function can return anoter function */
+/* a function can return another function */
 function foo() {
   return function() {
     console.log('function bar called!\n');
@@ -33,11 +33,11 @@ function baz(anotherFunction) {
   anotherFunction();
 }
 
-/* if you don't specify a return statemnet, the function call will implicitly return 'undefined' */
+/* if you don't specify a return statement, the function call will implicitly return 'undefined' */
 const returnedValueFromBaz = baz(a);
 console.log(`returned value from calling baz is: ${returnedValueFromBaz}\n`);
 
-/* you can specify any number of argurments to a function
+/* you can specify any number of arguments to a function
   BUT as a caller you are not force to pass all of them
 */
 
