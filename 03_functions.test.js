@@ -93,12 +93,14 @@ describe('About Functions', function() {
   });
 
   it('should return a reversed string', () => {
+    //complete the function
     function reverse() {}
 
     expect(reverse('hello')).toEqual('olleh');
   });
 
   it('should return a human age in dog age (1 1 human year to 7 dog years', () => {
+    //complete the function
     function puppyCalculator() {}
 
     expect(puppyCalculator(35)).toBe(5);
@@ -107,10 +109,11 @@ describe('About Functions', function() {
   });
 
   it('should return a string with a defined suffix', () => {
+    //complete the function
     function addSuffix() {}
 
     expect(markTaskDone('task1')).toEqual('task1 done!');
     expect(markTaskDone('task2')).toEqual('task2 done!');
-    expect(hemphasis('do it').toEqual('do it!'));
+    expect(emphasis('do it')).toEqual('do it!');
   });
 });
