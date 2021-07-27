@@ -1,227 +1,132 @@
-//## VARIABLES
-//
-// var
-// let
-// const
+// Variables
 
-//## VAR
+// Hint: Run me in [Quokka](https://quokkajs.com/)
 
-var p = 0,
-  q = 0;
+// ## The three types of variables
 
-var z = y,
-  y = 'A';
+// `var`
+var a = 0;
 
-console.log(z + y); // undefinedA
+// `let`
+let b = 0;
 
-var x = 0; // x is declared global, then assigned a value of 0
+// and `const`
+const c = 1;
 
-console.log(typeof z); // undefined, since z doesn't exist yet
+// ## But, what's the difference?
+// ### Difference 1: Scoping
 
-function a() {
-  // when a is called,
-  var y = 2; // y is declared local to function a, then assigned a value of 2
+// JavaScript as a whole has what's known as "function scoping"
 
-  console.log(x, y); // 0 2
+// This means that variables, when declared are "scoped" to that function
 
-  function b() {
-    // when b is called
-    x = 3; // assigns 3 to existing global x, doesn't create a new global var
-    y = 4; // assigns 4 to existing outer y, doesn't create a new global var
-    z = 5; // creates a new global variable z and assigns a value of 5.
-  } // (Throws a ReferenceError in strict mode.)
+var a = 0;
 
-  b(); // calling b creates z as a global variable
-  console.log(x, y, z); // 3 4 5
+// **Example:** Functions and their scopes
+
+(function outer() {
+  var a = 1;
+
+  (function inner() {
+    var a = 2;
+
+    // **Output:** 2
+    console.log(a);
+  })();
+
+  // **Output:** 1
+  console.log(a);
+})();
+
+// As you can see, we're not overwriting the outer variable. We have two, one in the inner function, one in the outer function.
+
+// ----
+
+// `var` is function scoped, `const` and `let` are _block scoped_
+
+// But what does that mean?
+
+// **Example:** var, let and const outside an if block
+
+var var_variable = 1;
+let let_variable = 2;
+const const_variable = 3;
+
+if (true) {
+  var var_variable = true;
+  let let_variable = true;
+  const const_variable = true;
 }
 
-a(); // calling a also calls b
-console.log(x, z); // 3 5
-console.log(typeof y); // undefined as y is local to function a
+// **Output:** ```true 2 3```
+console.log(var_variable, let_variable, const_variable);
+// **Explanation:** It overrides the `var` but not the `let` or `const`
 
-//# #HOISTING
+// ### Difference 2: Immutability
 
-function catName(name) {
-  console.log("My cat's name is " + name);
+// A `var` and a `let` declaration _can_ be overwritten
+
+// A `const` cannot. And if you attempt to... an error will be thrown.
+
+// Note: By "overwritten" we mean reassigned a new space in memory
+
+// **Example:** Changing a `const` and `let` variable
+
+const NAME = 'Louis';
+let age = 12;
+
+// **Output:** ```Louis is 12 years old```
+console.log(`${NAME} is ${age} years old`);
+
+// Note: We need to use a try/catch otherwise the assignment to `NAME` would throw an error (and stop the execution of the file)
+try {
+  age = age + 1;
+  NAME = 'woo';
+} catch (e) {
+  // **Output:** ```Assignment to constant variable.```
+  console.log(e);
 }
 
-catName('Tigger');
-/*
-The result of the code above is: "My cat's name is Tigger"
-*/
+// **Output:** ```Louis is 13 years old```
+console.log(`${NAME} is ${age} years old`);
 
-dogName('Chloe');
+// As you can see, `age` can be updated as it's a `let` whereas `NAME` cannot as it's a `const`. However, you _can_ update the properties of an object or an array if it's a const.
 
-function dogName(name) {
-  console.log("My cat's name is " + name);
-}
-/*
-The result of the code above is: "My cat's name is Chloe"
-*/
+// -----
 
-num = 6;
-num + 7;
-var num;
-/* gives no errors as long as num is declared*/
+// **Example:** Updating an object or an array.
 
-//JavaScript only hoists declarations, not initializations.
-//If you are using a variable that is declared and initialized after using it, the value will be undefined.
-//The below two examples demonstrate the same behavior.
-var l = 1; // Initialize l
-console.log(l + ' ' + m); // '1 undefined'
-var m = 2;
+const NAMES = ['Mo', 'Jo'];
 
-// The following code will behave the same as the previous code:
-var l = 1; // Initialize x
-var n; // Declare y
-console.log(l + ' ' + n); // '1 undefined'
-n = 2; // Initialize y
+// Let's try pushing to the previously created array.
+NAMES.push('JoJo');
 
-//## LET
-// The let statement declares a block scope local variable, optionally initializing it to a value.
-// Switch to the browser to see how this behaves there
-var k = 'global';
-let i = 'global';
-console.log(this.k); // "global"
-console.log(this.i); // undefined
+// **Output:** ```['Mo', 'Jo', 'JoJo']```
+console.log(NAMES);
 
-/* In ECMAScript 2015, let bindings are not subject to Variable Hoisting, which means that let declarations do not move 
-   to the top of the current execution context.  
-   Referencing the variable in the block before the initialization results in a ReferenceError (contrary to a variable declared with var, 
-   which will just have the undefined value). 
-   The variable is in a "temporal dead zone" from the start of the block until the initialization is processed. 
-*/
+// How is this possible? Because a `const` says that the in memory reference cannot be changed, but the properties can.
 
-function varTest() {
-  var x = 1;
-  if (true) {
-    var x = 2; // same variable!
-    console.log(x); // 2
-  }
-  console.log(x); // 2
-}
+// Note: This is similar to how JS handles "pass by reference" and "pass by value".
 
-//varTest()
+// ## What if you don't add the var, let, const?
 
-function letTest() {
-  let x = 1;
-  if (true) {
-    let x = 2; // different variable
-    console.log(x); // 2
-  }
-  console.log(x); // 1
-}
+// **Example:** A variable without a `var`, `let` or `const` keyword...
 
-//letTest()
+(function nameMyCat() {
+  cat = 'Molly';
+})();
 
-//## HOISTING reprise
+// **Output:** ```Molly```
+console.log(cat);
+// **Explanation:** Now Molly is bound to the global scope
 
-function do_something() {
-  console.log(bar); // undefined
-  console.log(foo); // ReferenceError
-  var bar = 1;
-  let foo = 2;
-}
+// ## A note on convention
 
-//do_something()
+// In JavaScript there are no strict "naming standards", however there are some conventions.
 
-let j = 1;
+// One of those is to [put your const variables as upper case](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/const#Examples)
 
-switch (j) {
-  case 0:
-    let foo;
-    break;
+// Like this...
+const PERSON = 'Mo';
 
-  case 1:
-    let foo; // SyntaxError for redeclaration.
-    break;
-}
-
-// However, it's important to point out that a block nested inside a case clause will create a new block scoped lexical environment,
-// which will not produce the redeclaration errors shown above.
-switch (j) {
-  case 0: {
-    let foo;
-    break;
-  }
-  case 1: {
-    let foo;
-    break;
-  }
-}
-
-var r = 1;
-var s = 2;
-
-if (r === 1) {
-  var r = 11; // the scope is global
-  let s = 22; // the scope is inside the if-block
-
-  console.log(r); // 11
-  console.log(s); // 22
-}
-
-console.log(r); // 11
-console.log(s); // 2
-
-//## CONST
-// The const declaration creates a read-only reference to a value.
-// It does not mean the value it holds is immutable, just that the variable identifier cannot be reassigned.
-// For instance, in the case where the content is an object, this means the object's contents (e.g., its parameters) can be altered.
-
-// NOTE: Constants can be declared with uppercase or lowercase, but a common
-// convention is to use all-uppercase letters.
-
-// define MY_FAV as a constant and give it the value 7
-const MY_FAV = 7;
-
-// this will throw an error - Uncaught TypeError: Assignment to constant variable.
-MY_FAV = 20;
-
-// MY_FAV is 7
-console.log('my favorite number is: ' + MY_FAV);
-
-// trying to redeclare a constant throws an error -  Uncaught SyntaxError: Identifier 'MY_FAV' has already been declared
-const MY_FAV = 20;
-
-// the name MY_FAV is reserved for constant above, so this will fail too
-var MY_FAV = 20;
-
-// this throws an error too
-let MY_FAV = 20;
-
-// it's important to note the nature of block scoping
-if (MY_FAV === 7) { 
-    // this is fine and creates a block scoped MY_FAV variable 
-    // (works equally well with let to declare a block scoped non const variable)
-    let MY_FAV = 20;
-
-    // MY_FAV is now 20
-    console.log('my favorite number is ' + MY_FAV);
-
-    // this gets hoisted into the global context and throws an error
-    var MY_FAV = 20;
-}
-
-// MY_FAV is still 7
-console.log('my favorite number is ' + MY_FAV);
-
-// throws an error - Uncaught SyntaxError: Missing initializer in const declaration
-const FOO; 
-
-// const also works on objects
-const MY_OBJECT = {'key': 'value'};
-
-// Attempting to overwrite the object throws an error - Uncaught TypeError: Assignment to constant variable.
-MY_OBJECT = {'OTHER_KEY': 'value'};
-
-// However, object keys are not protected,
-// so the following statement is executed without problem
-MY_OBJECT.key = 'otherValue'; // Use Object.freeze() to make object immutable
-
-// The same applies to arrays
-const MY_ARRAY = [];
-// It's possible to push items into the array
-MY_ARRAY.push('A'); // ["A"]
-// However, assigning a new array to the variable throws an error - Uncaught TypeError: Assignment to constant variable.
-MY_ARRAY = ['B'];
+// This just makes it easier to see when you cannot overwrite a value.
